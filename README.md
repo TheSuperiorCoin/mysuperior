@@ -32,6 +32,7 @@ to MyMonero. They include:
  - legacy address + payment_id system replaced with integrated addresses for better privacy.
  - free, time based imports of recent transactions added.
  - new transaction details window.
+ - sending xmr to a subaddress (not receiving nor generating subaddresses for now).
    
 ## Testnet version
 
@@ -69,6 +70,7 @@ The Open Monero consists of four components that need to be setup for it to work
 
 #### Performance
 
+<<<<<<< HEAD
 Open Monero is not as fast as MyMonero. This is because it is basic, easy to understand
  and straight forward implementation of the backend. Thus, it does not use any special memory
  buffers/caches for transactions, blocks, complex database structures and SQL queries. Also, no ongoing 
@@ -76,6 +78,17 @@ Open Monero is not as fast as MyMonero. This is because it is basic, easy to und
  search threads start when user logs in (viewkey and address are submitted to the search thread), 
  and finish shorty after logout. Once the search threads stop, 
  they can't be restarted without user logging in back, because viewkey is unknown.
+=======
+Open Monero is not as fast as MyMonero.
+ This is because it is basic, easy to understand and 
+ straight forward implementation of the backend. Thus, 
+ it does not use any special memory buffers/caches for transactions, 
+ blocks, complex database structures and SQL queries. Also, no ongoing monitoring of user's
+  transactions is happening, since viewkey is not stored. Transaction search threads start when 
+  user logs in (viewkey and address are submitted to the search thread), and finish shorty 
+  after logout. Once the search threads stop, they can't be restarted without user logging
+   in back, because viewkey is unknown.
+>>>>>>> 7487e9e7b534db3e78b3d53a9c619fcb20cb0a87
 
 
 
@@ -87,7 +100,7 @@ For other Linux operating systems, the instructions are analogical.
 
 #### Monero download and compilation
 
-Download and compile recent Monero realease into your home folder:
+Download and compile recent Monero into your home folder:
 
 ```bash
 # first install monero dependecines
@@ -103,9 +116,6 @@ cd ~
 git clone https://github.com/monero-project/monero
 
 cd monero/
-
-# checkout last monero version
-git checkout -b last_release v0.11.0.0
 
 make
 ```

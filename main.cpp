@@ -89,9 +89,11 @@ string deamon_url = testnet
 
 // set mysql/mariadb connection details
 xmreg::MySqlConnector::url      = config_json["database"]["url"];
+xmreg::MySqlConnector::port     = config_json["database"]["port"];
 xmreg::MySqlConnector::username = config_json["database"]["user"];
 xmreg::MySqlConnector::password = config_json["database"]["password"];
 xmreg::MySqlConnector::dbname   = config_json["database"]["dbname"];
+
 
 // set blockchain status monitoring thread parameters
 xmreg::CurrentBlockchainStatus::blockchain_path
@@ -127,6 +129,22 @@ else
 }
 
 
+// try connecting to the mysql
+shared_ptr<xmreg::MySqlAccounts> mysql_accounts;
+
+try
+{
+    // MySqlAccounts will try connecting to the mysql database
+    mysql_accounts = make_shared<xmreg::MySqlAccounts>();
+}
+catch(std::exception const& e)
+{
+    cerr << e.what() << '\n';
+    return EXIT_FAILURE;
+}
+
+
+
 // since CurrentBlockchainStatus class monitors current status
 // of the blockchain (e.g., current height), its seems logical to
 // make static objects for accessing the blockchain in this class.
@@ -148,10 +166,9 @@ if (!xmreg::CurrentBlockchainStatus::init_monero_blockchain())
 xmreg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
 
 
-// create REST JSON API services
 
-xmreg::YourMoneroRequests open_monero(
-        shared_ptr<xmreg::MySqlAccounts>(new xmreg::MySqlAccounts{}));
+// create REST JSON API services
+xmreg::YourMoneroRequests open_monero(mysql_accounts);
 
 // create Open Monero APIs
 MAKE_RESOURCE(login);
