@@ -73,7 +73,7 @@ OutputInputIdentification::identify_outputs()
 
         // get the tx output public key
         // that normally would be generated for us,
-        // if someone had sent us some xmr.
+        // if someone had sent us some sup.
         public_key generated_tx_pubkey;
 
         derive_public_key(derivation,

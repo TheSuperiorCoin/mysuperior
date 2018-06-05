@@ -266,4 +266,4 @@ make_hash(const string& in_str);
 
 }
 
-#endif //XMREG01_TOOLS_H
+#endif //SUPEG01_TOOLS_H

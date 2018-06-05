@@ -752,4 +752,4 @@ public:
 
 }
 
-#endif //XMRLMDBCPP_MYLMDB_H
+#endif //SUPLMDBCPP_MYLMDB_H

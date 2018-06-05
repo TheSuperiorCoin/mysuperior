@@ -303,4 +303,4 @@ struct SupPayment : public Payments, Table
 }
 
 
-#endif //RESTBED_XMR_SSQLSES_H
+#endif //RESTBED_SUP_SSQLSES_H

@@ -34,7 +34,7 @@ uint64_t                CurrentBlockchainStatus::search_thread_life_in_seconds {
 vector<pair<uint64_t, transaction>> CurrentBlockchainStatus::mempool_txs;
 string                  CurrentBlockchainStatus::import_payment_address_str;
 string                  CurrentBlockchainStatus::import_payment_viewkey_str;
-uint64_t                CurrentBlockchainStatus::import_fee {10000000000}; // 0.01 xmr
+uint64_t                CurrentBlockchainStatus::import_fee {10000000000}; // 0.01 sup
 address_parse_info      CurrentBlockchainStatus::import_payment_address;
 secret_key              CurrentBlockchainStatus::import_payment_viewkey;
 map<string, unique_ptr<TxSearch>> CurrentBlockchainStatus::searching_threads;
@@ -123,7 +123,7 @@ CurrentBlockchainStatus::update_current_blockchain_height()
 bool
 CurrentBlockchainStatus::init_superior_blockchain()
 {
-    // set  monero log output level
+    // set  superior log output level
     uint32_t log_level = 0;
     mlog_configure(mlog_get_default_log_path(""), true);
 
@@ -638,7 +638,7 @@ CurrentBlockchainStatus::search_if_payment_made(
 
             // get the tx output public key
             // that normally would be generated for us,
-            // if someone had sent us some xmr.
+            // if someone had sent us some sup.
             public_key generated_tx_pubkey;
 
             derive_public_key(derivation,
@@ -747,7 +747,7 @@ CurrentBlockchainStatus::start_tx_search_thread(SupAccount acc)
 
     try
     {
-        // make a tx_search object for the given xmr account
+        // make a tx_search object for the given sup account
         //searching_threads.emplace(acc.address, new TxSearch(acc)); // does not work on older gcc
                                                                      // such as the one in ubuntu 16.04
         searching_threads[acc.address] = unique_ptr<TxSearch>(new TxSearch(acc));
@@ -1062,8 +1062,8 @@ CurrentBlockchainStatus::construct_output_rct_field(
                                            // not the ones we actually spend.
             // ringct coinbase txs are special. they have identity mask.
             // as suggested by this code:
-            // https://github.com/monero-project/monero/blob/eacf2124b6822d088199179b18d4587404408e0f/src/wallet/wallet2.cpp#L893
-            // https://github.com/monero-project/monero/blob/master/src/blockchain_db/blockchain_db.cpp#L100
+            // https://github.com/superior-project/superior/blob/eacf2124b6822d088199179b18d4587404408e0f/src/wallet/wallet2.cpp#L893
+            // https://github.com/superior-project/superior/blob/master/src/blockchain_db/blockchain_db.cpp#L100
             // rtc_mask   = pod_to_hex(rct::identity());
         }
 

@@ -89,7 +89,7 @@ For other Linux operating systems, the instructions are analogical.
 Download and compile recent Superior into your home folder:
 
 ```bash
-# first install monero dependecines
+# first install superior dependecines
 sudo apt update
 
 sudo apt install git build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind-dev pkg-config libssl-dev libcurl4-openssl-dev libgtest-dev libreadline-dev libzmq3-dev libsodium-dev libpcsclite-dev
@@ -97,11 +97,11 @@ sudo apt install git build-essential cmake libboost-all-dev miniupnpc libunbound
 # go to home folder
 cd ~
 
-git clone --recursive https://github.com/monero-project/monero
+git clone --recursive https://github.com/superior-project/superior
 
-cd monero/
+cd superior/
 
-# checkout last monero version
+# checkout last superior version
 git checkout -b last_release v0.12.0.0
 
 make
@@ -118,19 +118,19 @@ work without database, setup frontend, and synced and running superior blockchai
 # need mysql++ libraries
 sudo apt install libmysql++-dev
 
-# go to home folder if still in ~/monero
+# go to home folder if still in ~/superior
 cd ~
 
-git clone https://github.com/moneroexamples/openmonero.git
+git clone https://github.com/superiorexamples/opensuperior.git
 
-cd openmonero
+cd opensuperior
 
 mkdir build && cd build
 
 cmake ..
 
-# altearnatively can use cmake -DMONERO_DIR=/path/to/monero_folder ..
-# if monero is not in ~/monero
+# altearnatively can use cmake -DSUPERIOR_DIR=/path/to/superior_folder ..
+# if superior is not in ~/superior
 
 make
 ```
@@ -150,7 +150,7 @@ Assuming we are still in `build` folder:
 
 ```bash
 # apply it to mysql
-mysql -p -u root < ../sql/openmonero.sql
+mysql -p -u root < ../sql/opensuperior.sql
 ```
 
 #### Lighttpd and frontend
@@ -161,8 +161,8 @@ sudo apt-get install lighttpd
 Assuming you are still in `build` folder, copy frontend source files into lighttpd www folder.
 
 ```bash
-sudo mkdir /var/www/html/openmonero
-sudo cp -rvf ../html/* /var/www/html/openmonero/
+sudo mkdir /var/www/html/opensuperior
+sudo cp -rvf ../html/* /var/www/html/opensuperior/
 ```
 
 Setup document root in `lighttpd.conf` into opensuperior folder
@@ -174,7 +174,7 @@ sudo vim /etc/lighttpd/lighttpd.conf
 and change `server.document-root` into:
 
 ```bash
-server.document-root    = "/var/www/html/openmonero"
+server.document-root    = "/var/www/html/opensuperior"
 ```
 
 Restart lighttpd to see the change:
@@ -191,7 +191,7 @@ Go to localhost (http://127.0.0.1) and check if frontend is working.
 Command line options
 
 ```bash
-./openmonero -h
+./opensuperior -h
   -h [ --help ] [=arg(=1)] (=0)         produce help message
   -t [ --testnet ] [=arg(=1)] (=0)      use testnet blockchain
   -s [ --stagenet ] [=arg(=1)] (=0)     use stagenet blockchain
@@ -199,7 +199,7 @@ Command line options
                                         useful when testing construction and
                                         submiting txs
   -p [ --port ] arg (=1984)             default port for restbed service of
-                                        Open Monero
+                                        Open Superior
   -c [ --config-file ] arg (=./config/config.json)
                                         Config file path.
 ```
@@ -219,23 +219,23 @@ Before running `opensuperior`:
 
 To start for mainnet:
 ```bash
-./openmonero
+./opensuperior
 ```
 
 To start for testnet:
 ```bash
-./openmonero -t
+./opensuperior -t
 ```
 
 To start for stagenet:
 ```bash
-./openmonero -s
+./opensuperior -s
 ```
 
 To start for stagenet with non-default location of `config.json` file:
 
 ```bash
-./openmonero -s -c /path/to/config.json
+./opensuperior -s -c /path/to/config.json
 ```
 
 
@@ -258,7 +258,7 @@ Example output:
   "git_branch_name": "upgrade_angularjs",
   "last_git_commit_date": "2017-07-25",
   "last_git_commit_hash": "456f9d6",
-  "monero_version_full": "0.10.3.1-125f823"
+  "superior_version_full": "0.10.3.1-125f823"
 }
 ```
 
@@ -427,8 +427,8 @@ Output (only part shown):
   "status": "OK",
   "tx_hash": "bfbfbb3bfa169731a092891795be1c3c923a018882ac0efc0ed3e79e2d2b2e54",
   "tx_height": 960491,
-  "xmr_inputs": 0,
-  "xmr_outputs": 0
+  "sup_inputs": 0,
+  "sup_outputs": 0
 }
 ```
 

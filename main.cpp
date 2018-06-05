@@ -94,7 +94,7 @@ supeg::CurrentBlockchainStatus::import_fee
 string deamon_url;
 
 // get blockchain path
-// if confing.json paths are emtpy, defeault monero
+// if confing.json paths are emtpy, defeault superior
 // paths are going to be used
 path blockchain_path;
 
@@ -171,7 +171,7 @@ catch(std::exception const& e)
 // since CurrentBlockchainStatus class monitors current status
 // of the blockchain (e.g., current height), its seems logical to
 // make static objects for accessing the blockchain in this class.
-// this way monero accessing blockchain variables (i.e. mcore and core_storage)
+// this way superior accessing blockchain variables (i.e. mcore and core_storage)
 // are not passed around like crazy everywhere. Uri( "file:///tmp/dh2048.pem"
 // There are here, and this is the only class that
 // has direct access to blockchain and talks (using rpc calls)
@@ -193,7 +193,7 @@ supeg::CurrentBlockchainStatus::start_monitor_blockchain_thread();
 // create REST JSON API services
 supeg::YourSuperiorRequests open_superior(mysql_accounts);
 
-// create Open Monero APIs
+// create Open Superior APIs
 MAKE_RESOURCE(login);
 MAKE_RESOURCE(get_address_txs);
 MAKE_RESOURCE(get_address_info);
@@ -208,7 +208,7 @@ MAKE_RESOURCE(get_version);
 // restbed service
 Service service;
 
-// Publish the Open Monero API created so that front end can use it
+// Publish the Open Superior API created so that front end can use it
 service.publish(login);
 service.publish(get_address_txs);
 service.publish(get_address_info);

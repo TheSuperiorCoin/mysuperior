@@ -837,7 +837,7 @@ MySqlAccounts::select_txs_for_account_spendability_check(
                 {
 //                    throw runtime_error("no_row_updated != 1 "
 //                                                "due to "
-//                                                "xmr_accounts->mark_tx_spendable(tx.id)");
+//                                                "sup_accounts->mark_tx_spendable(tx.id)");
 
                     cerr << "no_row_updated != 1 due to  sup_accounts->mark_tx_spendable(tx.id)\n";
                     return false;
@@ -868,7 +868,7 @@ MySqlAccounts::select_txs_for_account_spendability_check(
                     {
 //                        throw runtime_error("no_row_updated != 1 "
 //                                                    "due to "
-//                                                    "xmr_accounts->delete_tx(tx.id)");
+//                                                    "sup_accounts->delete_tx(tx.id)");
                         cerr << "no_row_updated != 1 due to  sup_accounts->delete_tx(tx.id)\n";
                         return false;
                     }
@@ -897,7 +897,7 @@ MySqlAccounts::select_txs_for_account_spendability_check(
 
         txs.push_back(tx);
 
-    } //for (XmrTransaction& tx: txs_tmp)
+    } //for (SupTransaction& tx: txs_tmp)
 
     return true;
 }

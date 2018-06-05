@@ -144,9 +144,9 @@ TxSearch::search()
             // in a given block;
             unique_ptr<DateTime> blk_timestamp_mysql_format;
 
-            // searching for our incoming and outgoing xmr has two components.
+            // searching for our incoming and outgoing sup has two components.
             //
-            // FIRST. to search for the incoming xmr, we use address, viewkey and
+            // FIRST. to search for the incoming sup, we use address, viewkey and
             // outputs public key. Its straight forward, as this is what viewkey was
             // designed to do.
             //
@@ -204,9 +204,9 @@ TxSearch::search()
 //                     it would be deleting already exisitng tx when rescanning
 //                     blockchain
 //
-//                    XmrTransaction tx_data_existing;
+//                    SupTransaction tx_data_existing;
 //
-//                    if (xmr_accounts->tx_exists(acc->id,
+//                    if (sup_accounts->tx_exists(acc->id,
 //                                                oi_identification.tx_hash_str,
 //                                                tx_data_existing))
 //                    {
@@ -217,9 +217,9 @@ TxSearch::search()
 //                        // if tx is already present for that user,
 //                        // we remove it, as we get it data from scrach
 //
-//                        if (xmr_accounts->delete_tx(tx_data_existing.id) == 0)
+//                        if (sup_accounts->delete_tx(tx_data_existing.id) == 0)
 //                        {
-//                            string msg = fmt::format("xmr_accounts->delete_tx(%d)",
+//                            string msg = fmt::format("sup_accounts->delete_tx(%d)",
 //                                                     tx_data_existing.id);
 //                            cerr << msg << endl;
 //                            throw TxSearchException(msg);
@@ -388,7 +388,7 @@ TxSearch::search()
                                  << out << '\n';
 
                             // seems that this key image is ours.
-                            // so get it information from database into XmrInput
+                            // so get it information from database into SupInput
                             // database structure that will be written later
                             // on into database.
 
@@ -403,7 +403,7 @@ TxSearch::search()
 
                             inputs_found.push_back(in_data);
 
-                        } // if (xmr_accounts->output_exists(output_public_key_str, out))
+                        } // if (sup_accounts->output_exists(output_public_key_str, out))
 
                     } // for (auto& in_info: oi_identification.identified_inputs)
 
@@ -631,7 +631,7 @@ TxSearch::find_txs_in_mempool(
         // and inputs in a given tx.
         OutputInputIdentification oi_identification {&address, &viewkey, &tx};
 
-        // FIRSt step. to search for the incoming xmr, we use address, viewkey and
+        // FIRSt step. to search for the incoming sup, we use address, viewkey and
         // outputs public key.
         oi_identification.identify_outputs();
 
@@ -737,7 +737,7 @@ TxSearch::find_txs_in_mempool(
                     j_tx["hash"]           = oi_identification.get_tx_hash_str();
                     j_tx["tx_pub_key"]     = oi_identification.get_tx_pub_key_str();
                     j_tx["timestamp"]      = recieve_time; // when it got into mempool
-                    j_tx["total_received"] = 0;          // we did not recive any outputs/xmr
+                    j_tx["total_received"] = 0;          // we did not recive any outputs/sup
                     j_tx["total_sent"]     = total_sent; // to be set later when looking for key images
                     j_tx["unlock_time"]    = 0;          // for mempool we set it to zero
                                                          // since we dont have block_height to work with

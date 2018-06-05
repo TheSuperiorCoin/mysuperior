@@ -139,4 +139,4 @@ public:
 
 
 }
-#endif //RESTBED_XMR_TXSEARCH_H
+#endif //RESTBED_SUP_TXSEARCH_H

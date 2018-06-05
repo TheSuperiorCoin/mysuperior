@@ -128,7 +128,7 @@ YourSuperiorRequests::login(const shared_ptr<Session> session, const Bytes & bod
         // their first install
         new_account_created = true;
 
-    } // if (!xmr_accounts->select(xmr_address, acc))
+    } // if (!sup_accounts->select(sup_address, acc))
 
 
     // so by now new account has been created or it already exists
@@ -149,7 +149,7 @@ YourSuperiorRequests::login(const shared_ptr<Session> session, const Bytes & bod
         session_close(session, j_response.dump());
         return;
 
-    } // else  if (login_and_start_search_thread(xmr_address, view_key, acc, j_response))
+    } // else  if (login_and_start_search_thread(sup_address, view_key, acc, j_response))
 
 
     session_close(session, j_response.dump());
@@ -192,7 +192,7 @@ YourSuperiorRequests::get_address_txs(const shared_ptr< Session > session, const
     j_response = json {
             {"total_received"         , 0},    // calculated in this function
             {"total_received_unlocked", 0},    // calculated in this function
-            {"scanned_height"         , 0},    // not used. it is here to match mymonero
+            {"scanned_height"         , 0},    // not used. it is here to match mysuperior
             {"scanned_block_height"   , 0},    // taken from Accounts table
             {"scanned_block_timestamp", 0},    // taken from Accounts table
             {"start_height"           , 0},    // blockchain hieght when acc was created
@@ -274,7 +274,7 @@ YourSuperiorRequests::get_address_txs(const shared_ptr< Session > session, const
 
                     j_tx["spent_outputs"] = j_spent_outputs;
 
-                } // if (xmr_accounts->select_inputs_for_tx(tx.id, inputs))
+                } // if (sup_accounts->select_inputs_for_tx(tx.id, inputs))
 
                 total_received += tx.total_received;
 
@@ -285,16 +285,16 @@ YourSuperiorRequests::get_address_txs(const shared_ptr< Session > session, const
 
                 j_txs.push_back(j_tx);
 
-            } // for (XmrTransaction tx: txs)
+            } // for (SupTransaction tx: txs)
 
             j_response["total_received"]          = total_received;
             j_response["total_received_unlocked"] = total_received_unlocked;
 
             j_response["transactions"] = j_txs;
 
-        } // if (xmr_accounts->select_txs_for_account_spendability_check(acc.id, txs))
+        } // if (sup_accounts->select_txs_for_account_spendability_check(acc.id, txs))
 
-    } // if (login_and_start_search_thread(xmr_address, view_key, acc, j_response))
+    } // if (login_and_start_search_thread(sup_address, view_key, acc, j_response))
     else
     {
         // some error with loggin in or search thread start
@@ -385,14 +385,14 @@ YourSuperiorRequests::get_address_info(const shared_ptr< Session > session, cons
     string viewkey_hash = make_hash(view_key);
 
     j_response = json {
-            {"locked_funds"           , 0},    // locked xmr (e.g., younger than 10 blocks)
+            {"locked_funds"           , 0},    // locked sup (e.g., younger than 10 blocks)
             {"total_received"         , 0},    // calculated in this function
             {"total_sent"             , 0},    // calculated in this function
-            {"scanned_height"         , 0},    // not used. it is here to match mymonero
+            {"scanned_height"         , 0},    // not used. it is here to match mysuperior
             {"scanned_block_height"   , 0},    // taken from Accounts table
             {"scanned_block_timestamp", 0},    // taken from Accounts table
             {"start_height"           , 0},    // not used, but available in Accounts table.
-                                               // it is here to match mymonero
+                                               // it is here to match mysuperior
             {"blockchain_height"      , 0},    // current blockchain height
             {"spent_outputs"          , nullptr} // list of spent outputs that we think
                                                // user has spent. client side will
@@ -471,11 +471,11 @@ YourSuperiorRequests::get_address_info(const shared_ptr< Session > session, cons
 
                         total_received += out.amount;
 
-                    } //  for (XmrOutput &out: outs)
+                    } //  for (SupOutput &out: outs)
 
-                } //  if (xmr_accounts->select_outputs_for_tx(tx.id, outs))
+                } //  if (sup_accounts->select_outputs_for_tx(tx.id, outs))
 
-            } // for (XmrTransaction tx: txs)
+            } // for (SupTransaction tx: txs)
 
 
             j_response["total_received"] = total_received;
@@ -483,9 +483,9 @@ YourSuperiorRequests::get_address_info(const shared_ptr< Session > session, cons
 
             j_response["spent_outputs"]  = j_spent_outputs;
 
-        } // if (xmr_accounts->select_txs_for_account_spendability_check(acc.id, txs))
+        } // if (sup_accounts->select_txs_for_account_spendability_check(acc.id, txs))
 
-    } //  if (login_and_start_search_thread(xmr_address, view_key, acc, j_response))
+    } //  if (login_and_start_search_thread(sup_address, view_key, acc, j_response))
     else
     {
         // some error with loggin in or search thread start
@@ -663,13 +663,13 @@ YourSuperiorRequests::get_unspent_outs(const shared_ptr< Session > session, cons
 
                         total_outputs_amount += out.amount;
 
-                    }  //for (XmrOutput &out: outs)
+                    }  //for (SupOutput &out: outs)
 
-                } // if (xmr_accounts->select_outputs_for_tx(tx.id, outs))
+                } // if (sup_accounts->select_outputs_for_tx(tx.id, outs))
 
-            } // for (XmrTransaction& tx: txs)
+            } // for (SupTransaction& tx: txs)
 
-        } //  if (xmr_accounts->select_txs(acc.id, txs))
+        } //  if (sup_accounts->select_txs(acc.id, txs))
 
         j_response["amount"] = total_outputs_amount;
 
@@ -686,7 +686,7 @@ YourSuperiorRequests::get_unspent_outs(const shared_ptr< Session > session, cons
         }
 
 
-    } // if (login_and_start_search_thread(xmr_address, view_key, acc, j_response))
+    } // if (login_and_start_search_thread(sup_address, view_key, acc, j_response))
     else
     {
         // some error with loggin in or search thread start
@@ -1020,7 +1020,7 @@ YourSuperiorRequests::import_wallet_request(const shared_ptr< Session > session,
             j_response["error"]             = "";
         }
 
-    } //  if (xmr_accounts->select_payment_by_address(xmr_address, xmr_payment))
+    } //  if (sup_accounts->select_payment_by_address(sup_address, sup_payment))
     else
     {
         // payment request is new, so create its entry in
@@ -1036,7 +1036,7 @@ YourSuperiorRequests::import_wallet_request(const shared_ptr< Session > session,
 
         sup_payment.address           = sup_address;
         sup_payment.payment_id        = pod_to_hex(random_payment_id8);
-        sup_payment.import_fee        = CurrentBlockchainStatus::import_fee; // xmr
+        sup_payment.import_fee        = CurrentBlockchainStatus::import_fee; // sup
         sup_payment.request_fulfilled = false;
         sup_payment.tx_hash           = ""; // no tx_hash yet with the payment
         sup_payment.payment_address   = integrated_address;
@@ -1273,7 +1273,7 @@ YourSuperiorRequests::get_tx(const shared_ptr< Session > session, const Bytes & 
         // key images of inputs
         vector<txin_to_key> input_key_imgs;
 
-        // public keys and xmr amount of outputs
+        // public keys and sup amount of outputs
         vector<pair<txout_to_key, uint64_t>> output_pub_keys;
 
         uint64_t sup_inputs;
@@ -1284,7 +1284,7 @@ YourSuperiorRequests::get_tx(const shared_ptr< Session > session, const Bytes & 
         uint64_t size;
         uint64_t blk_height;
 
-        // sum xmr in inputs and ouputs in the given tx
+        // sum sup in inputs and ouputs in the given tx
         array<uint64_t, 4> const& sum_data = supeg::summary_of_in_out_rct(
                 tx, output_pub_keys, input_key_imgs);
 
@@ -1342,7 +1342,7 @@ YourSuperiorRequests::get_tx(const shared_ptr< Session > session, const Bytes & 
         address_parse_info address_info;
         secret_key viewkey;
 
-        // to get info about recived xmr in this tx, we calculate it from
+        // to get info about recived sup in this tx, we calculate it from
         // scrach, i.e., search for outputs. We could get this info
         // directly from the database, but doing it again here, is a good way
         // to double check tx data in the frontend, and also maybe try doing
@@ -1426,15 +1426,15 @@ YourSuperiorRequests::get_tx(const shared_ptr< Session > session, const Bytes & 
                                           {"mixin"      , out.mixin}});
                                 }
 
-                            } // for (XmrInput input: inputs)
+                            } // for (SupInput input: inputs)
 
                             j_response["total_sent"]    = total_spent;
 
                             j_response["spent_outputs"] = j_spent_outputs;
 
-                        } // if (xmr_accounts->select_inputs_for_tx(tx.id, inputs))
+                        } // if (sup_accounts->select_inputs_for_tx(tx.id, inputs))
 
-                    }  // if (xmr_accounts->tx_exists(acc.id, tx_hash_str, xmr_tx))
+                    }  // if (sup_accounts->tx_exists(acc.id, tx_hash_str, sup_tx))
 
                 } // if (!tx_in_mempool)
                 else
@@ -1495,13 +1495,13 @@ YourSuperiorRequests::get_tx(const shared_ptr< Session > session, const Bytes & 
                         j_response["spent_outputs"] = j_spent_outputs;
 
                     } //if (CurrentBlockchainStatus::get_known_outputs_keys(
-                      //    xmr_address, known_outputs_keys))
+                      //    sup_address, known_outputs_keys))
 
                 } //  else
 
-            } //  if (xmr_accounts->select(xmr_address, acc))
+            } //  if (sup_accounts->select(sup_address, acc))
 
-        } //  if (CurrentBlockchainStatus::get_xmr_address_viewkey(address_str, address, viewkey)
+        } //  if (CurrentBlockchainStatus::get_sup_address_viewkey(address_str, address, viewkey)
 
         j_response["tx_height"]         = tx_height;
         j_response["no_confirmations"]  = no_confirmations;

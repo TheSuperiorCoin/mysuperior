@@ -106,4 +106,4 @@ init_blockchain(const string& path,
 
 
 
-#endif //XMREG01_MICROCORE_H
+#endif //SUPEG01_MICROCORE_H

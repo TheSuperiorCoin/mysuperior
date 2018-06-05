@@ -34,4 +34,4 @@ namespace supeg
 }
 
 
-#endif //XMREG01_CMDLINEOPTIONS_H
+#endif //SUPEG01_CMDLINEOPTIONS_H

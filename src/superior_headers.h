@@ -40,5 +40,5 @@
 #include "string_coding.h"
 
 
-#endif //XMREG01_MONERO_HEADERS_H_H
+#endif //SUPEG01_SUPERIOR_HEADERS_H_H
 
