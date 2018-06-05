@@ -6,8 +6,8 @@ demonstrate how to provide Superior related JSON REST service. For this purpose,
 
 
 Open Superior is an open source implementation of backend of
-https://mysuperior.com/. The frontend, which includes HTML, CSS, JavaScript, was adapted
-from (and originally developed by) https://mysuperior.com/.
+https://mysuperiorcoin.com/. The frontend, which includes HTML, CSS, JavaScript, was adapted
+from (and originally developed by) https://mysuperiorcoin.com/.
 
 Open Superior's backend is open sourced, free
 to use, host and modify. Additionally, some features were added/changed as compared
@@ -31,21 +31,6 @@ to MySuperior. They include:
  - new transaction details window.
  - sending sup to a subaddress (not receiving nor generating subaddresses for now).
 
-## Stagenet version (Currently offline)
-
-- [http://139.162.32.245:81](http://139.162.32.245:81) - DOWN due to problems with
-my VPS hosting.
-
-This is Open Superior running on stagnet network. You can use it to play around with it.
-Since this is stagnet version, frequent changes and database resets are expected. Also,
-
- it is running on cheap VPS, which may result in some lag.
-
-
-## Screenshot
-
-![Open Superior](https://raw.githubusercontent.com/superiorexamples/opensuperior/master/screenshot/screen1.png)
-
 
 ## Host it yourself
 
@@ -67,7 +52,7 @@ The Open Superior consists of four components that need to be setup for it to wo
 
 #### Performance
 
-Open Superior is not as fast as MySuperior.
+Open Superior is not as fast as MyMonero.
  This is because it is basic, easy to understand and
  straight forward implementation of the backend. Thus,
  it does not use any special memory buffers/caches for transactions,
@@ -84,12 +69,12 @@ Below are example and basic instructions on how to setup up and run Open Superio
 For other Linux operating systems, the instructions are analogical.
 
 
-#### Superior download and compilation
+#### TheSuperiorCoin download and compilation
 
-Download and compile recent Superior into your home folder:
+Download and compile recent TheSuperiorCoin into your home folder:
 
 ```bash
-# first install superior dependecines
+# first install TheSuperiorCoin dependecines
 sudo apt update
 
 sudo apt install git build-essential cmake libboost-all-dev miniupnpc libunbound-dev graphviz doxygen libunwind-dev pkg-config libssl-dev libcurl4-openssl-dev libgtest-dev libreadline-dev libzmq3-dev libsodium-dev libpcsclite-dev
@@ -97,12 +82,12 @@ sudo apt install git build-essential cmake libboost-all-dev miniupnpc libunbound
 # go to home folder
 cd ~
 
-git clone --recursive https://github.com/superior-project/superior
+git clone --recursive https://github.com/TheSuperiorCoin/TheSuperiorCoin
 
-cd superior/
+cd TheSuperiorCoin/
 
 # checkout last superior version
-git checkout -b last_release v0.12.0.0
+git checkout -b last_release v0.12.1
 
 make
 ```
@@ -118,10 +103,10 @@ work without database, setup frontend, and synced and running superior blockchai
 # need mysql++ libraries
 sudo apt install libmysql++-dev
 
-# go to home folder if still in ~/superior
+# go to home folder if still in ~/TheSuperiorCoin
 cd ~
 
-git clone https://github.com/superiorexamples/opensuperior.git
+git clone https://github.com/TheSuperiorCoin/opensuperior.git
 
 cd opensuperior
 
@@ -129,8 +114,8 @@ mkdir build && cd build
 
 cmake ..
 
-# altearnatively can use cmake -DSUPERIOR_DIR=/path/to/superior_folder ..
-# if superior is not in ~/superior
+# altearnatively can use cmake -DSUPERIOR_DIR=/path/to/TheSuperiorCoin_folder ..
+# if TheSuperiorCoin is not in ~/TheSuperiorCoin
 
 make
 ```
@@ -549,7 +534,7 @@ openssl dhparam -out dh2048.pem 2048
 
 ## Other examples
 
-Other examples can be found on  [github](https://github.com/superiorexamples?tab=repositories).
+Other examples can be found on  [github](https://github.com/moneroexamples?tab=repositories).
 Please know that some of the examples/repositories are not
 finished and may not work as intended.
 
