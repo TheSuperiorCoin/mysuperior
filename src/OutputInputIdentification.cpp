@@ -18,13 +18,8 @@ OutputInputIdentification::OutputInputIdentification(
     viewkey = _v;
     tx = _tx;
 
-    tx_hash        = get_transaction_hash(*tx);
-    tx_prefix_hash = get_transaction_prefix_hash(*tx);
-    tx_pub_key     = xmreg::get_tx_pub_key_from_received_outs(*tx);
-
-    tx_hash_str        = pod_to_hex(tx_hash);
-    tx_prefix_hash_str = pod_to_hex(tx_prefix_hash);
-    tx_pub_key_str     = pod_to_hex(tx_pub_key);
+    tx_hash     = get_transaction_hash(*tx);
+    tx_pub_key  = xmreg::get_tx_pub_key_from_received_outs(*tx);
 
     tx_is_coinbase = is_coinbase(*tx);
 
@@ -39,7 +34,7 @@ OutputInputIdentification::OutputInputIdentification(
     if (!generate_key_derivation(tx_pub_key, *viewkey, derivation))
     {
         cerr << "Cant get derived key for: "  << "\n"
-             << "pub_tx_key: " << tx_pub_key << " and "
+             << "pub_tx_key: " << get_tx_pub_key_str() << " and "
              << "prv_view_key" << viewkey << endl;
 
         throw OutputInputIdentificationException("Cant get derived key for a tx");
@@ -47,9 +42,18 @@ OutputInputIdentification::OutputInputIdentification(
 
     if (!tx_is_coinbase)
     {
-        mixin_no = get_mixin_no(*tx);
+
     }
 
+}
+
+uint64_t
+OutputInputIdentification::get_mixin_no()
+{
+    if (mixin_no == 0 && !tx_is_coinbase)
+        mixin_no = xmreg::get_mixin_no(*tx);
+
+    return mixin_no;
 }
 
 void
@@ -141,7 +145,7 @@ OutputInputIdentification::identify_outputs()
 
             // found an output associated with the given address and viewkey
             string msg = fmt::format("tx_hash:  {:s}, output_pub_key: {:s}\n",
-                                     tx_hash_str,
+                                     get_tx_hash_str(),
                                      out_key_str);
 
             cout << msg << endl;
@@ -151,7 +155,7 @@ OutputInputIdentification::identify_outputs()
 
             identified_outputs.emplace_back(
                     output_info{
-                            out_key_str, amount, output_idx_in_tx,
+                            txout_k.key, amount, output_idx_in_tx,
                             rtc_outpk, rtc_mask, rtc_amount
                     });
 
@@ -164,7 +168,7 @@ OutputInputIdentification::identify_outputs()
 
 void
 OutputInputIdentification::identify_inputs(
-        const vector<pair<string, uint64_t>>& known_outputs_keys)
+        const vector<pair<public_key, uint64_t>>& known_outputs_keys)
 {
     vector<txin_to_key> input_key_imgs = xmreg::get_key_images(*tx);
 
@@ -199,9 +203,9 @@ OutputInputIdentification::identify_inputs(
         for (const uint64_t& abs_offset: absolute_offsets)
         {
             // get basic information about mixn's output
-            cryptonote::output_data_t output_data = mixin_outputs.at(count);
+            cryptonote::output_data_t output_data = mixin_outputs[count];
 
-            string output_public_key_str = pod_to_hex(output_data.pubkey);
+            //string output_public_key_str = pod_to_hex(output_data.pubkey);
 
             //cout << " - output_public_key_str: " << output_public_key_str << endl;
 
@@ -213,9 +217,9 @@ OutputInputIdentification::identify_inputs(
             auto it =  std::find_if(
                     known_outputs_keys.begin(),
                     known_outputs_keys.end(),
-                    [&](const pair<string, uint64_t>& known_output)
+                    [&output_data](pair<public_key, uint64_t> const& known_output)
                     {
-                        return output_public_key_str == known_output.first;
+                        return output_data.pubkey == known_output.first;
                     });
 
             if (it == known_outputs_keys.end())
@@ -231,7 +235,7 @@ OutputInputIdentification::identify_inputs(
             identified_inputs.push_back(input_info {
                     pod_to_hex(in_key.k_image),
                     (*it).second, // amount
-                    output_public_key_str});
+                    output_data.pubkey});
 
             found_a_match = true;
 
@@ -247,11 +251,46 @@ OutputInputIdentification::identify_inputs(
             // in all inputs in a given txs. Thus, if a single input
             // is without our output, we can assume this tx does
             // not contain any of our spendings.
-            break;
+            //break;
         }
 
     } // for (const txin_to_key& in_key: input_key_imgs)
 
+}
+
+
+string const&
+OutputInputIdentification::get_tx_hash_str()
+{
+    if (tx_hash_str.empty())
+    {
+        tx_hash_str = pod_to_hex(tx_hash);
+    }
+
+
+    return tx_hash_str;
+}
+
+
+string const&
+OutputInputIdentification::get_tx_prefix_hash_str()
+{
+    if (tx_prefix_hash_str.empty())
+    {
+        tx_prefix_hash = get_transaction_prefix_hash(*tx);
+        tx_prefix_hash_str = pod_to_hex(tx_prefix_hash);
+    }
+
+    return tx_prefix_hash_str;
+}
+
+string const&
+OutputInputIdentification::get_tx_pub_key_str()
+{
+    if (tx_pub_key_str.empty())
+        tx_pub_key_str = pod_to_hex(tx_pub_key);
+
+    return tx_pub_key_str;
 }
 
 }
