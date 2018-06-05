@@ -2,8 +2,8 @@
 // Created by mwo on 14/12/16.
 //
 
-#ifndef RESTBED_XMR_CURRENTBLOCKCHAINSTATUS_H
-#define RESTBED_XMR_CURRENTBLOCKCHAINSTATUS_H
+#ifndef RESTBED_SUP_CURRENTBLOCKCHAINSTATUS_H
+#define RESTBED_SUP_CURRENTBLOCKCHAINSTATUS_H
 
 #define MYSQLPP_SSQLS_NO_STATICS 1
 
@@ -17,12 +17,12 @@
 #include <atomic>
 
 
-namespace xmreg {
+namespace supeg {
 
 using namespace std;
 
 class TxSearch;
-class XmrAccount;
+class SupAccount;
 class MySqlAccounts;
 
 static mutex searching_threads_map_mtx;
@@ -81,7 +81,7 @@ struct CurrentBlockchainStatus
     // since this class monitors current status
     // of the blockchain, its seems logical to
     // make object for accessing the blockchain here
-    static unique_ptr<xmreg::MicroCore> mcore;
+    static unique_ptr<supeg::MicroCore> mcore;
     static cryptonote::Blockchain *core_storage;
 
     static
@@ -94,7 +94,7 @@ struct CurrentBlockchainStatus
     update_current_blockchain_height();
 
     static bool
-    init_monero_blockchain();
+    init_superior_blockchain();
 
     static bool
     is_tx_unlocked(uint64_t unlock_time, uint64_t block_height);
@@ -178,7 +178,7 @@ struct CurrentBlockchainStatus
     // definitions of these function are at the end of this file
     // due to forward declaraions of TxSearch
     static bool
-    start_tx_search_thread(XmrAccount acc);
+    start_tx_search_thread(SupAccount acc);
 
     static bool
     ping_search_thread(const string& address);
@@ -187,7 +187,7 @@ struct CurrentBlockchainStatus
     search_thread_exist(const string& address);
 
     static bool
-    get_xmr_address_viewkey(const string& address_str,
+    get_sup_address_viewkey(const string& address_str,
                             address_parse_info& address,
                             secret_key& viewkey);
     static bool

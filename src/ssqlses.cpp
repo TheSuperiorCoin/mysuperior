@@ -5,7 +5,7 @@
 #include "ssqlses.h"
 
 
-namespace xmreg
+namespace supeg
 {
 
 
@@ -16,7 +16,7 @@ ostream& operator<< (std::ostream& os, const Table& data)
 };
 
 json
-XmrAccount::to_json() const
+SupAccount::to_json() const
 {
     json j {{"id"                     , id},
             {"address"                , address},
@@ -30,7 +30,7 @@ XmrAccount::to_json() const
 }
 
 json
-XmrTransaction::to_json() const
+SupTransaction::to_json() const
 {
     json j {{"id"                  , id},
             {"hash"                , hash},
@@ -54,20 +54,20 @@ XmrTransaction::to_json() const
 }
 
 DateTime
-XmrTransaction::timestamp_to_DateTime(time_t timestamp)
+SupTransaction::timestamp_to_DateTime(time_t timestamp)
 {
     return DateTime(timestamp);
 }
 
-ostream& operator<< (std::ostream& os, const XmrTransaction& acc)
+ostream& operator<< (std::ostream& os, const SupTransaction& acc)
 {
-    os << "XmrTransactions: " << acc.to_json().dump() << '\n';
+    os << "SupTransactions: " << acc.to_json().dump() << '\n';
     return os;
 };
 
 
 json
-XmrOutput::to_json() const
+SupOutput::to_json() const
 {
     json j {{"id"                  , id},
             {"account_id"          , account_id},
@@ -85,14 +85,14 @@ XmrOutput::to_json() const
 }
 
 
-ostream& operator<< (std::ostream& os, const XmrOutput& out) {
-    os << "XmrOutputs: " << out.to_json().dump() << '\n';
+ostream& operator<< (std::ostream& os, const SupOutput& out) {
+    os << "SupOutputs: " << out.to_json().dump() << '\n';
     return os;
 };
 
 
 json
-XmrInput::to_json() const
+SupInput::to_json() const
 {
     json j {{"id"                  , id},
             {"account_id"          , account_id},
@@ -108,14 +108,14 @@ XmrInput::to_json() const
 
 
 
-ostream& operator<< (std::ostream& os, const XmrInput& out)
+ostream& operator<< (std::ostream& os, const SupInput& out)
 {
-    os << "XmrInput: " << out.to_json().dump() << '\n';
+    os << "SupInput: " << out.to_json().dump() << '\n';
     return os;
 };
 
 json
-XmrPayment::to_json() const
+SupPayment::to_json() const
 {
     json j {{"id"               , id},
             {"address"          , address},
@@ -130,8 +130,8 @@ XmrPayment::to_json() const
 }
 
 
-ostream& operator<< (std::ostream& os, const XmrPayment& out) {
-    os << "XmrPayment: " << out.to_json().dump() << '\n';
+ostream& operator<< (std::ostream& os, const SupPayment& out) {
+    os << "SupPayment: " << out.to_json().dump() << '\n';
     return os;
 };
 

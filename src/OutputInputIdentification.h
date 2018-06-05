@@ -2,13 +2,13 @@
 // Created by mwo on 13/02/17.
 //
 
-#ifndef RESTBED_XMR_OUTPUTINPUTIDENTIFICATION_H
-#define RESTBED_XMR_OUTPUTINPUTIDENTIFICATION_H
+#ifndef RESTBED_SUP_OUTPUTINPUTIDENTIFICATION_H
+#define RESTBED_SUP_OUTPUTINPUTIDENTIFICATION_H
 
 #include "CurrentBlockchainStatus.h"
 #include "tools.h"
 
-namespace xmreg
+namespace supeg
 {
 
 

@@ -12,7 +12,7 @@
 #include <memory>
 
 
-namespace xmreg {
+namespace supeg {
 
 
 string MySqlConnector::url;

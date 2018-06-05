@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 set(PROJECT_NAME
-        openmonero)
+        opensuperior)
 
 project(${PROJECT_NAME})
 
@@ -12,48 +12,48 @@ if(CMAKE_SIZEOF_VOID_P EQUAL "4")
   add_definitions(-DMDB_VL32)
 endif()
 
-if (NOT MONERO_DIR)
-    set(MONERO_DIR ~/monero)
+if (NOT SUPERIOR_DIR)
+    set(SUPERIOR_DIR ~/TheSuperiorCoin)
 endif()
 
-message(STATUS MONERO_DIR ": ${MONERO_DIR}")
+message(STATUS SUPERIOR_DIR ": ${SUPERIOR_DIR}")
 
-set(MONERO_SOURCE_DIR ${MONERO_DIR}
-        CACHE PATH "Path to the root directory for Monero")
+set(SUPERIOR_SOURCE_DIR ${SUPERIOR_DIR}
+        CACHE PATH "Path to the root directory for TheSuperiorCoin")
 
-# set location of monero build tree
-set(MONERO_BUILD_DIR ${MONERO_SOURCE_DIR}/build/release/
-        CACHE PATH "Path to the build directory for Monero")
+# set location of superior build tree
+set(SUPERIOR_BUILD_DIR ${SUPERIOR_SOURCE_DIR}/build/release/
+        CACHE PATH "Path to the build directory for TheSuperiorCoin")
 
 set(MY_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake"
         CACHE PATH "The path to the cmake directory of the current project")
 
 list(APPEND CMAKE_MODULE_PATH "${MY_CMAKE_DIR}")
 
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${MONERO_BUILD_DIR}"
-        CACHE PATH "Add Monero directory for library searching")
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${SUPERIOR_BUILD_DIR}"
+        CACHE PATH "Add Superior directory for library searching")
 
 include(MyUtils)
 
-find_package(Monero)
+find_package(TheSuperiorCoin)
 
 include_directories(/usr/include/mysql)
 
 # include boost headers
 include_directories(${Boost_INCLUDE_DIRS})
 
-# include monero headers
+# include superior headers
 include_directories("ext/restbed/source")
 
 include_directories(
-    ${MONERO_SOURCE_DIR}/build
+    ${SUPERIOR_SOURCE_DIR}/build
     /usr/local/include
     /usr/local/include/mysql
     /usr/local/opt/openssl/include
 )
 
 link_directories(
-    ${MONERO_BUILD_DIR}/src/crypto
+    ${SUPERIOR_BUILD_DIR}/src/crypto
     /usr/local/lib
     /usr/local/opt/openssl/lib
 )

@@ -2,18 +2,18 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_TOOLS_H
-#define XMREG01_TOOLS_H
+#ifndef SUPEG01_TOOLS_H
+#define SUPEG01_TOOLS_H
 
 #define PATH_SEPARARTOR '/'
 
-#define XMR_AMOUNT(value) \
+#define SUP_AMOUNT(value) \
     static_cast<double>(value) / 1e12
 
 #define REMOVE_HASH_BRAKETS(a_hash) \
     a_hash.substr(1, a_hash.size()-2)
 
-#include "monero_headers.h"
+#include "superior_headers.h"
 
 #include "../ext/format.h"
 #include "../ext/json.hpp"
@@ -34,7 +34,7 @@
  * Names are rather self-explanatory, so I think
  * there is no reason for any detailed explanations here
  */
-namespace xmreg
+namespace supeg
 {
 
 using namespace cryptonote;
@@ -164,7 +164,7 @@ get_payment_id(const transaction& tx,
                crypto::hash8& payment_id8);
 
 inline double
-get_xmr(uint64_t core_amount)
+get_sup(uint64_t core_amount)
 {
     return  static_cast<double>(core_amount) / 1e12;
 }
@@ -206,7 +206,7 @@ get_tx_pub_key_from_received_outs(const transaction &tx);
 
 
 string
-xmr_amount_to_str(const uint64_t& xmr_amount, string format="{:0.12f}");
+sup_amount_to_str(const uint64_t& sup_amount, string format="{:0.12f}");
 
 bool
 is_output_ours(const size_t& output_index,

@@ -12,10 +12,10 @@
 #include "TxSearch.h"
 
 
-#undef MONERO_DEFAULT_LOG_CATEGORY
-#define MONERO_DEFAULT_LOG_CATEGORY "openmonero"
+#undef SUPERIOR_DEFAULT_LOG_CATEGORY
+#define SUPERIOR_DEFAULT_LOG_CATEGORY "opensuperior"
 
-namespace xmreg
+namespace supeg
 {
 
 
@@ -39,7 +39,7 @@ address_parse_info      CurrentBlockchainStatus::import_payment_address;
 secret_key              CurrentBlockchainStatus::import_payment_viewkey;
 map<string, unique_ptr<TxSearch>> CurrentBlockchainStatus::searching_threads;
 cryptonote::Blockchain* CurrentBlockchainStatus::core_storage;
-unique_ptr<xmreg::MicroCore>        CurrentBlockchainStatus::mcore;
+unique_ptr<supeg::MicroCore>        CurrentBlockchainStatus::mcore;
 
 void
 CurrentBlockchainStatus::start_monitor_blockchain_thread()
@@ -50,7 +50,7 @@ CurrentBlockchainStatus::start_monitor_blockchain_thread()
 
     if (!import_payment_address_str.empty() && !import_payment_viewkey_str.empty())
     {
-        if (!xmreg::parse_str_address(
+        if (!supeg::parse_str_address(
                 import_payment_address_str,
                 import_payment_address,
                 CurrentBlockchainStatus::net_type))
@@ -61,7 +61,7 @@ CurrentBlockchainStatus::start_monitor_blockchain_thread()
             return;
         }
 
-        if (!xmreg::parse_str_secret_key(
+        if (!supeg::parse_str_secret_key(
                 import_payment_viewkey_str,
                 import_payment_viewkey))
         {
@@ -103,11 +103,11 @@ CurrentBlockchainStatus::get_current_blockchain_height()
 
     try
     {
-        return xmreg::MyLMDB::get_blockchain_height(blockchain_path) - 1;
+        return supeg::MyLMDB::get_blockchain_height(blockchain_path) - 1;
     }
     catch(std::exception& e)
     {
-        cerr << "xmreg::MyLMDB::get_blockchain_height: " << e.what() << endl;
+        cerr << "supeg::MyLMDB::get_blockchain_height: " << e.what() << endl;
         return previous_height;
     }
 
@@ -121,13 +121,13 @@ CurrentBlockchainStatus::update_current_blockchain_height()
 }
 
 bool
-CurrentBlockchainStatus::init_monero_blockchain()
+CurrentBlockchainStatus::init_superior_blockchain()
 {
     // set  monero log output level
     uint32_t log_level = 0;
     mlog_configure(mlog_get_default_log_path(""), true);
 
-    mcore = unique_ptr<xmreg::MicroCore>(new xmreg::MicroCore{});
+    mcore = unique_ptr<supeg::MicroCore>(new supeg::MicroCore{});
 
     // initialize the core using the blockchain path
     if (!mcore->init(blockchain_path, net_type))
@@ -574,7 +574,7 @@ CurrentBlockchainStatus::search_if_payment_made(
 
         // decrypt the encrypted_payment_id8
 
-        public_key tx_pub_key = xmreg::get_tx_pub_key_from_received_outs(tx);
+        public_key tx_pub_key = supeg::get_tx_pub_key_from_received_outs(tx);
 
 
         // public transaction key is combined with our viewkey
@@ -734,7 +734,7 @@ CurrentBlockchainStatus::get_output_key(uint64_t amount, uint64_t global_amount_
 }
 
 bool
-CurrentBlockchainStatus::start_tx_search_thread(XmrAccount acc)
+CurrentBlockchainStatus::start_tx_search_thread(SupAccount acc)
 {
     std::lock_guard<std::mutex> lck (searching_threads_map_mtx);
 
@@ -833,7 +833,7 @@ CurrentBlockchainStatus::search_thread_exist(const string& address)
 }
 
 bool
-CurrentBlockchainStatus::get_xmr_address_viewkey(
+CurrentBlockchainStatus::get_sup_address_viewkey(
         const string& address_str,
         address_parse_info& address,
         secret_key& viewkey)
@@ -847,8 +847,8 @@ CurrentBlockchainStatus::get_xmr_address_viewkey(
         return false;
     }
 
-    address = searching_threads[address_str].get()->get_xmr_address_viewkey().first;
-    viewkey = searching_threads[address_str].get()->get_xmr_address_viewkey().second;
+    address = searching_threads[address_str].get()->get_sup_address_viewkey().first;
+    viewkey = searching_threads[address_str].get()->get_sup_address_viewkey().second;
 
     return true;
 };
@@ -923,7 +923,7 @@ CurrentBlockchainStatus::find_key_images_in_mempool(std::vector<txin_v> const& v
         {
             const transaction &m_tx = mtx.second;
 
-            vector<txin_to_key> input_key_imgs = xmreg::get_key_images(m_tx);
+            vector<txin_to_key> input_key_imgs = supeg::get_key_images(m_tx);
 
             for (auto const& mki: input_key_imgs)
             {

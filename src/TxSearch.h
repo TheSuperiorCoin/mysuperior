@@ -2,8 +2,8 @@
 // Created by mwo on 8/01/17.
 //
 
-#ifndef RESTBED_XMR_TXSEARCH_H
-#define RESTBED_XMR_TXSEARCH_H
+#ifndef RESTBED_SUP_TXSEARCH_H
+#define RESTBED_SUP_TXSEARCH_H
 
 #include <iostream>
 #include <memory>
@@ -13,12 +13,12 @@
 #include "MySqlAccounts.h"
 #include "OutputInputIdentification.h"
 
-namespace xmreg
+namespace supeg
 {
 
 using namespace std;
 
-class XmrAccount;
+class SupAccount;
 class MySqlAccounts;
 
 class TxSearchException: public std::runtime_error
@@ -50,7 +50,7 @@ class TxSearch
     atomic<uint64_t> searched_blk_no;
 
     // represents a row in mysql's Accounts table
-    shared_ptr<XmrAccount> acc;
+    shared_ptr<SupAccount> acc;
 
     // stores known output public keys.
     // used as a cash to fast look up of
@@ -64,7 +64,7 @@ class TxSearch
     // its better to when each thread has its own mysql connection object.
     // this way if one thread crashes, it want take down
     // connection for the entire service
-    shared_ptr<MySqlAccounts> xmr_accounts;
+    shared_ptr<MySqlAccounts> sup_accounts;
 
     // address and viewkey for this search thread.
     address_parse_info address;
@@ -72,7 +72,7 @@ class TxSearch
 
 public:
 
-    TxSearch(XmrAccount& _acc);
+    TxSearch(SupAccount& _acc);
 
     void
     search();
@@ -129,7 +129,7 @@ public:
     find_txs_in_mempool(vector<pair<uint64_t, transaction>> mempool_txs);
 
     pair<address_parse_info, secret_key>
-    get_xmr_address_viewkey() const;
+    get_sup_address_viewkey() const;
 
     static void
     set_search_thread_life(uint64_t life_seconds);

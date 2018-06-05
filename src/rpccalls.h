@@ -3,14 +3,14 @@
 //
 
 
-#ifndef CROWXMR_RPCCALLS_H
-#define CROWXMR_RPCCALLS_H
+#ifndef CROWSUP_RPCCALLS_H
+#define CROWSUP_RPCCALLS_H
 
-#include "monero_headers.h"
+#include "superior_headers.h"
 
 #include <mutex>
 
-namespace xmreg
+namespace supeg
 {
 
 using namespace cryptonote;
@@ -38,7 +38,7 @@ public:
              uint64_t _timeout = 200000);
 
     bool
-    connect_to_monero_deamon();
+    connect_to_superior_deamon();
     uint64_t
     get_current_height();
 

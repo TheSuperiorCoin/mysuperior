@@ -2,16 +2,16 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_MICROCORE_H
-#define XMREG01_MICROCORE_H
+#ifndef SUPEG01_MICROCORE_H
+#define SUPEG01_MICROCORE_H
 
 #include <iostream>
 #include <random>
 
-#include "monero_headers.h"
+#include "superior_headers.h"
 #include "tools.h"
 
-namespace xmreg
+namespace supeg
 {
 using namespace cryptonote;
 using namespace crypto;

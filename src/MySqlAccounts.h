@@ -2,8 +2,8 @@
 // Created by mwo on 16/12/16.
 //
 
-#ifndef RESTBED_XMR_MYSQLACCOUNTS_H
-#define RESTBED_XMR_MYSQLACCOUNTS_H
+#ifndef RESTBED_SUP_MYSQLACCOUNTS_H
+#define RESTBED_SUP_MYSQLACCOUNTS_H
 
 #include "tools.h"
 #include "MySqlConnector.h"
@@ -15,7 +15,7 @@
 
 
 
-namespace xmreg
+namespace supeg
 {
 
 using namespace mysqlpp;
@@ -23,12 +23,12 @@ using namespace std;
 using namespace nlohmann;
 
 
-class XmrTransactionWithOutsAndIns;
-class XmrInput;
-class XmrOutput;
-class XmrTransaction;
-class XmrPayment;
-class XmrAccount;
+class SupTransactionWithOutsAndIns;
+class SupInput;
+class SupOutput;
+class SupTransaction;
+class SupPayment;
+class SupAccount;
 class TxSearch;
 
 
@@ -43,16 +43,16 @@ public:
     MysqlInputs(shared_ptr<MySqlConnector> _conn);
 
     bool
-    select(const uint64_t& address_id, vector<XmrInput>& ins);
+    select(const uint64_t& address_id, vector<SupInput>& ins);
 
     bool
-    select_for_tx(const uint64_t& address_id, vector<XmrInput>& ins);
+    select_for_tx(const uint64_t& address_id, vector<SupInput>& ins);
 
     bool
-    select_for_out(const uint64_t& output_id, vector<XmrInput>& ins);
+    select_for_out(const uint64_t& output_id, vector<SupInput>& ins);
 
     uint64_t
-    insert(const XmrInput& in_data);
+    insert(const SupInput& in_data);
 
 };
 
@@ -68,21 +68,21 @@ public:
     MysqlOutpus(shared_ptr<MySqlConnector> _conn);
 
     bool
-    select(const uint64_t& address_id, vector<XmrOutput>& outs);
+    select(const uint64_t& address_id, vector<SupOutput>& outs);
 
     bool
-    select_for_tx(const uint64_t& tx_id, vector<XmrOutput>& outs);
+    select_for_tx(const uint64_t& tx_id, vector<SupOutput>& outs);
 
     bool
-    select(const uint64_t& out_id, XmrOutput& out);
+    select(const uint64_t& out_id, SupOutput& out);
 
     bool
-    exist(const string& output_public_key_str, XmrOutput& out);
+    exist(const string& output_public_key_str, SupOutput& out);
 
 
 
     uint64_t
-    insert(const XmrOutput& out_data);
+    insert(const SupOutput& out_data);
 
 };
 
@@ -98,11 +98,11 @@ public:
     MysqlTransactions(shared_ptr<MySqlConnector> _conn);
 
     bool
-    select(const uint64_t& address_id, vector<XmrTransaction>& txs);
+    select(const uint64_t& address_id, vector<SupTransaction>& txs);
 
 
     uint64_t
-    insert(const XmrTransaction& tx_data);
+    insert(const SupTransaction& tx_data);
 
     uint64_t
     mark_spendable(const uint64_t& tx_id_no);
@@ -112,7 +112,7 @@ public:
 
 
     bool
-    exist(const uint64_t& account_id, const string& tx_hash_str, XmrTransaction& tx);
+    exist(const uint64_t& account_id, const string& tx_hash_str, SupTransaction& tx);
 
 
     uint64_t
@@ -131,18 +131,18 @@ public:
     MysqlPayments(shared_ptr<MySqlConnector> _conn);
 
     bool
-    select(const string& address, vector<XmrPayment>& payments);
+    select(const string& address, vector<SupPayment>& payments);
 
     bool
-    select_by_payment_id(const string& payment_id, vector<XmrPayment>& payments);
+    select_by_payment_id(const string& payment_id, vector<SupPayment>& payments);
 
 
     uint64_t
-    insert(const XmrPayment& payment_data);
+    insert(const SupPayment& payment_data);
 
 
     bool
-    update(XmrPayment& payment_orginal, XmrPayment& payment_new);
+    update(SupPayment& payment_orginal, SupPayment& payment_new);
 
 
 };
@@ -169,10 +169,10 @@ public:
 
 
     bool
-    select(const string& address, XmrAccount& account);
+    select(const string& address, SupAccount& account);
 
     bool
-    select(const int64_t& acc_id, XmrAccount& account);
+    select(const int64_t& acc_id, SupAccount& account);
 
     uint64_t
     insert(const string& address,
@@ -181,47 +181,47 @@ public:
            uint64_t const& current_blkchain_height = 0);
 
     uint64_t
-    insert_tx(const XmrTransaction& tx_data);
+    insert_tx(const SupTransaction& tx_data);
 
     uint64_t
-    insert_output(const XmrOutput& tx_out);
+    insert_output(const SupOutput& tx_out);
 
     uint64_t
-    insert_input(const XmrInput& tx_in);
+    insert_input(const SupInput& tx_in);
 
     bool
-    select_txs(const string& xmr_address, vector<XmrTransaction>& txs);
+    select_txs(const string& sup_address, vector<SupTransaction>& txs);
 
     bool
-    select_txs(const uint64_t& account_id, vector<XmrTransaction>& txs);
+    select_txs(const uint64_t& account_id, vector<SupTransaction>& txs);
 
     bool
     select_txs_for_account_spendability_check(const uint64_t& account_id,
-                                              vector<XmrTransaction>& txs);
+                                              vector<SupTransaction>& txs);
 
     bool
-    select_output_with_id(const uint64_t& out_id, XmrOutput& out);
+    select_output_with_id(const uint64_t& out_id, SupOutput& out);
 
     bool
-    select_outputs(const uint64_t& account_id, vector<XmrOutput>& outs);
+    select_outputs(const uint64_t& account_id, vector<SupOutput>& outs);
 
     bool
-    select_outputs_for_tx(const uint64_t& tx_id, vector<XmrOutput>& outs);
+    select_outputs_for_tx(const uint64_t& tx_id, vector<SupOutput>& outs);
 
     bool
-    select_inputs(const uint64_t& account_id, vector<XmrInput>& ins);
+    select_inputs(const uint64_t& account_id, vector<SupInput>& ins);
 
     bool
-    select_inputs_for_tx(const uint64_t& tx_id, vector<XmrInput>& ins);
+    select_inputs_for_tx(const uint64_t& tx_id, vector<SupInput>& ins);
 
     bool
-    select_inputs_for_out(const uint64_t& output_id, vector<XmrInput>& ins);
+    select_inputs_for_out(const uint64_t& output_id, vector<SupInput>& ins);
 
     bool
-    output_exists(const string& output_public_key_str, XmrOutput& out);
+    output_exists(const string& output_public_key_str, SupOutput& out);
 
     bool
-    tx_exists(const uint64_t& account_id, const string& tx_hash_str, XmrTransaction& tx);
+    tx_exists(const uint64_t& account_id, const string& tx_hash_str, SupTransaction& tx);
 
     uint64_t
     mark_tx_spendable(const uint64_t& tx_id_no);
@@ -230,25 +230,25 @@ public:
     delete_tx(const uint64_t& tx_id_no);
 
     uint64_t
-    insert_payment(const XmrPayment& payment);
+    insert_payment(const SupPayment& payment);
 
     bool
-    select_payment_by_id(const string& payment_id, vector<XmrPayment>& payments);
+    select_payment_by_id(const string& payment_id, vector<SupPayment>& payments);
 
     bool
-    select_payment_by_address(const string& address, vector<XmrPayment>& payments);
+    select_payment_by_address(const string& address, vector<SupPayment>& payments);
 
     bool
-    select_payment_by_address(const string& address, XmrPayment& payment);
+    select_payment_by_address(const string& address, SupPayment& payment);
 
     bool
-    update_payment(XmrPayment& payment_orginal, XmrPayment& payment_new);
+    update_payment(SupPayment& payment_orginal, SupPayment& payment_new);
 
     uint64_t
     get_total_recieved(const uint64_t& account_id);
 
     bool
-    update(XmrAccount& acc_orginal, XmrAccount& acc_new);
+    update(SupAccount& acc_orginal, SupAccount& acc_new);
 
     void
     launch_mysql_pinging_thread();

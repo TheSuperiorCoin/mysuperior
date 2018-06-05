@@ -2,17 +2,17 @@
 // Created by mwo on 5/11/15.
 //
 
-#ifndef XMREG01_MONERO_HEADERS_H_H
-#define XMREG01_MONERO_HEADERS_H_H
+#ifndef SUPEG01_SUPERIOR_HEADERS_H_H
+#define SUPEG01_SUPERIOR_HEADERS_H_H
 
 #define DB_LMDB   2
 #define BLOCKCHAIN_DB DB_LMDB
 
 
-#define UNSIGNED_TX_PREFIX "Monero unsigned tx set\003"
-#define SIGNED_TX_PREFIX "Monero signed tx set\003"
-#define KEY_IMAGE_EXPORT_FILE_MAGIC "Monero key image export\002"
-#define OUTPUT_EXPORT_FILE_MAGIC "Monero output export\003"
+#define UNSIGNED_TX_PREFIX "Superior unsigned tx set\003"
+#define SIGNED_TX_PREFIX "Superior signed tx set\003"
+#define KEY_IMAGE_EXPORT_FILE_MAGIC "Superior key image export\002"
+#define OUTPUT_EXPORT_FILE_MAGIC "Superior output export\003"
 
 #define FEE_ESTIMATE_GRACE_BLOCKS 10
 

@@ -5,7 +5,7 @@
 #include "OutputInputIdentification.h"
 
 
-namespace xmreg
+namespace supeg
 {
 
 OutputInputIdentification::OutputInputIdentification(
@@ -19,7 +19,7 @@ OutputInputIdentification::OutputInputIdentification(
     tx = _tx;
 
     tx_hash     = get_transaction_hash(*tx);
-    tx_pub_key  = xmreg::get_tx_pub_key_from_received_outs(*tx);
+    tx_pub_key  = supeg::get_tx_pub_key_from_received_outs(*tx);
 
     tx_is_coinbase = is_coinbase(*tx);
 
@@ -51,7 +51,7 @@ uint64_t
 OutputInputIdentification::get_mixin_no()
 {
     if (mixin_no == 0 && !tx_is_coinbase)
-        mixin_no = xmreg::get_mixin_no(*tx);
+        mixin_no = supeg::get_mixin_no(*tx);
 
     return mixin_no;
 }
@@ -170,7 +170,7 @@ void
 OutputInputIdentification::identify_inputs(
         const vector<pair<public_key, uint64_t>>& known_outputs_keys)
 {
-    vector<txin_to_key> input_key_imgs = xmreg::get_key_images(*tx);
+    vector<txin_to_key> input_key_imgs = supeg::get_key_images(*tx);
 
     // make timescale maps for mixins in input
     for (const txin_to_key& in_key: input_key_imgs)
